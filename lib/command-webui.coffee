@@ -44,7 +44,8 @@ class CommandWebUI
       @state.opened = yes
 
     io.on 'connection', ((socket) ->
-      socket.emit 'data', buttons: @state.buttons
+      socket.emit 'buttonState', @state.buttons
+
       socket.on 'my other event', (data) ->
         console.log data
         return
@@ -52,7 +53,7 @@ class CommandWebUI
       ).bind(this)
 
     app.get '/b1', (req, res) ->
-      console.log('funny bullshit');
+      console.log('Despatch test');
 
       ele = atom.workspace.getActivePaneItem() ? atom.workspace
       atom.commands.dispatch atom.views.getView(atom.workspace), 'color-tabs:color-current-tab'
