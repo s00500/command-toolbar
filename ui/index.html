@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Atom Command Palette</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var host = window.location.origin;
+      var socket = io.connect(host);
+      socket.on('connection',function(socket) {
+        console.log("WE ARE CONNECTED");
+      });
+
+      socket.on('data', function (data) {
+        console.log(data);
+        //socket.emit('my other event', { my: 'data' });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Hello kids =D</h1>
+  </body>
+</html>
