@@ -5,9 +5,12 @@
 fs          = require 'fs'
 pathUtil    = require 'path'
 ToolbarView = require './toolbar-view'
-express = require('express')
 
-app = express()
+express     = require 'express'
+app         = express()
+server      = require('http').Server(app);
+io          = require('socket.io')(server);
+
 
 class CommandWebUI
   config:
@@ -26,6 +29,11 @@ class CommandWebUI
       type: 'boolean'
       default: true
 
+    webserverPort:
+      title: 'Set the webinterfaces port'
+      type: 'number'
+      default: 3030
+
   activate: ->
     @state =
       statePath: pathUtil.dirname(atom.config.getUserConfigPath()) +
@@ -35,9 +43,13 @@ class CommandWebUI
     catch e
       @state.opened = yes
 
-    app.get '/', (req, res) ->
-      res.send '<a href="/b1">Button one</button>'
+    io.on 'connection', ((socket) ->
+      socket.emit 'data', buttons: @state.buttons
+      socket.on 'my other event', (data) ->
+        console.log data
+        return
       return
+      ).bind(this)
 
     app.get '/b1', (req, res) ->
       console.log('funny bullshit');
@@ -48,9 +60,14 @@ class CommandWebUI
       res.redirect '/'
       return
 
-    app.listen 3030, ->
-      console.log 'listening'
+    app.use(express.static(pathUtil.join(__dirname, '..', 'ui')));
+
+    server.on 'error', (error) ->
+      console.log error # this passes the error to the log instead of a notification
       return
+
+    server.listen(atom.config.get 'command-webui.webserverPort')
+
 
     if atom.config.get 'command-webui.alwaysShowToolbarOnLoad'
       @state.opened = yes
