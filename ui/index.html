@@ -13,12 +13,29 @@
     <script>
       var host = window.location.origin;
       var socket = io.connect(host);
-      socket.on('connection',function(socket) {
-        console.log("Socket connected");
+
+      socket.on('connect',function(socket) {
+        console.log('socketIO connected');
+        $("#conStatus").addClass("color-green");
+        $("#conStatus").text("Connected");
+      });
+
+      socket.on('connect_error',function(socket) {
+        console.log("socketIO error");
+        $("#conStatus").removeClass("color-green");
+        $("#conStatus").addClass("color-red");
+        $("#conStatus").text("Error / No Connection");
+      });
+
+      socket.on('reconnect',function(socket) {
+        console.log('socketIO RECONNECTED');
+        $("#conStatus").addClass("color-green");
+        $("#conStatus").text("Connected");
       });
 
       socket.on('buttonState', function (buttons) {
         // refresh all buttons here
+        $('#row').empty();
         console.log(buttons);
         buttons.forEach(function(button, index){
           // could create a tooltipp with the command here
@@ -32,7 +49,7 @@
     </script>
   </head>
   <body>
-    
+
     <div><h4><div id="mainHeader">Atom Command Palette </div> <span id="conStatus" class="label">Offline</span></h4></div>
     <hr />
     <div class="container">

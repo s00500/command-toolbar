@@ -31,8 +31,10 @@ class CommandWebUI
 
     webserverPort:
       title: 'Set the webinterfaces port'
-      type: 'number'
+      type: 'integer'
       default: 3030
+      minimum: 1025
+      maximum: 99999
 
   activate: ->
     @state =
@@ -46,9 +48,14 @@ class CommandWebUI
     io.on 'connection', ((socket) ->
       socket.emit 'buttonState', @state.buttons
 
-      socket.on 'my other event', (data) ->
+      socket.on 'buttonEvent', ((data) ->
+        console.log 'should dispatch here'
         console.log data
+        # check if exists
+        ele = atom.workspace.getActivePaneItem() ? atom.workspace
+        atom.commands.dispatch atom.views.getView(ele), @state.buttons[data][1]
         return
+        ).bind(this)
       return
       ).bind(this)
 
@@ -77,6 +84,9 @@ class CommandWebUI
 
     @sub = atom.commands.add 'atom-workspace', 'command-webui:toggle-toolbar': => @toggle()
 
+  refreshUI: ->
+    if server.listening
+      io.emit 'buttonState', @state.buttons
 
   toggle: (forceOn) ->
     if forceOn or not @state.opened

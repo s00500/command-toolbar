@@ -14,7 +14,7 @@ class ToolbarView extends View
     @div class:'command-toolbar toolbar-horiz', =>
       @div outlet:'newBtn', class:'new-btn command-toolbar-btn'
 
-  initialize: (commandToolbar, @state) ->
+  initialize: (@commandToolbar, @state) ->
     @subs = new subAtom
     @$workspace = $ atom.views.getView atom.workspace
     @updateSide null, yes
@@ -37,6 +37,8 @@ class ToolbarView extends View
       fs.writeFileSync @state.statePath, JSON.stringify @state
     catch e
       console.log 'command-toolbar error saving state file:', e.message
+
+    @commandToolbar.refreshUI()
 
   chkTooltip: (e) ->
     now = Date.now()
