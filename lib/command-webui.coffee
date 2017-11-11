@@ -18,16 +18,13 @@ class CommandWebUI
       title: 'Always show command bar when Atom opens'
       type: 'boolean'
       default: true
+      order: 1
 
     useRightPane:
       title: 'Open web pages in a right pane'
       type: 'boolean'
       default: false
-
-    webserverActive:
-      title: 'Set the webinterface active'
-      type: 'boolean'
-      default: true
+      order: 2
 
     webserverPort:
       title: 'Set the webinterfaces port'
@@ -35,6 +32,37 @@ class CommandWebUI
       default: 3030
       minimum: 1025
       maximum: 99999
+      order: 3
+
+    webserverActive:
+      title: 'Set the webinterface active'
+      type: 'boolean'
+      default: true
+      order: 4
+
+    saveCommands:
+      title: 'Set commands for save event on specified scope names'
+      type: 'object'
+      properties:
+        scopeNames:
+          type: 'array'
+          default: ['source.coffee','other']
+          items:
+            type: 'string'
+          order: 1
+        commands:
+            type: 'array'
+            default: ['test','other']
+            items:
+              type: 'string'
+            order: 2
+      order: 5
+
+    showScopeNames:
+      title: 'HELPER: show scope names on save'
+      type: 'boolean'
+      default: false
+      order: 6
 
   activate: ->
     @state =
@@ -45,12 +73,24 @@ class CommandWebUI
     catch e
       @state.opened = yes
 
+    atom.workspace.observeTextEditors (editor) -> 
+      editor.getBuffer().onWillSave ->
+        gname = editor.getGrammar().scopeName
+
+        if atom.config.get 'command-webui.showScopeNames'
+          atom.notifications.addSuccess 'Scope:', {'detail': gname}
+
+        coms = atom.config.get 'command-webui.saveCommands.commands'
+        snames = atom.config.get 'command-webui.saveCommands.scopeNames'
+        snames.forEach (sname, index) ->
+          if gname == sname
+            ele = atom.workspace.getActivePaneItem() ? atom.workspace
+            atom.commands.dispatch atom.views.getView(ele), coms[index]
+
     io.on 'connection', ((socket) ->
       socket.emit 'buttonState', @state.buttons
 
       socket.on 'buttonEvent', ((data) ->
-        console.log 'should dispatch here'
-        console.log data
         # check if exists
         ele = atom.workspace.getActivePaneItem() ? atom.workspace
         atom.commands.dispatch atom.views.getView(ele), @state.buttons[data][1]
@@ -58,15 +98,6 @@ class CommandWebUI
         ).bind(this)
       return
       ).bind(this)
-
-    app.get '/b1', (req, res) ->
-      console.log('Despatch test');
-
-      ele = atom.workspace.getActivePaneItem() ? atom.workspace
-      atom.commands.dispatch atom.views.getView(atom.workspace), 'color-tabs:color-current-tab'
-
-      res.redirect '/'
-      return
 
     app.use(express.static(pathUtil.join(__dirname, '..', 'ui')));
 
@@ -80,7 +111,6 @@ class CommandWebUI
     if atom.config.get 'command-webui.alwaysShowToolbarOnLoad'
       @state.opened = yes
     if @state.opened then @toggle yes
-    console.log('initialising');
 
     @sub = atom.commands.add 'atom-workspace', 'command-webui:toggle-toolbar': => @toggle()
 
