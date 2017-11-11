@@ -11,7 +11,8 @@
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/grid.css">
 
-  <script src="/zepto.js"></script>
+  <script src="/js/zepto.js"></script>
+  <script src="/js/nosleep.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var host = window.location.origin;
@@ -43,8 +44,8 @@
       buttons.forEach(function(button, index) {
         // could create a tooltipp with the command here
         //$('#row').append("<div class='two columns card'><h5>" + button[0] + "</h5><hr/><button onClick='buttonClick(" + index + ")' id='" + index + "'></button></div>");
-        $('#grid').append("<button id='" + index + "' class='item " + index + "' name='" + index + "'>"+ button[0] +"</button>");
-        $('#' + index).on('touchstart', function(e){
+        $('#grid').append("<button id='" + index + "' class='item " + index + "' name='" + index + "'>" + button[0] + "</button>");
+        $('#' + index).on('touchstart', function(e) {
           // We do this to prevent double click zoom in mobile browsers
           buttonClick(e.target.name);
           e.preventDefault();
@@ -61,10 +62,29 @@
 <body>
 
   <div>
-    <h4><div id="mainHeader">Atom Command Palette </div> <span id="conStatus" class="label">Offline</span></h4></div>
-      <div id="grid" class="btn-grid">
-      </div>
+    <h4><div id="mainHeader">Atom Command Palette </div> <span id="conStatus" class="label">Offline</span></h4><button id='wakelock'>wake lock</button>
+  </div>
+  <div id="grid" class="btn-grid">
+  </div>
 
 </body>
+<script>
+  var noSleep = new NoSleep();
+  var wakeLockEnabled = false;
+
+  document.getElementById('wakelock').addEventListener('click', function() {
+    if (!wakeLockEnabled) {
+      noSleep.enable(); // keep the screen on!
+      wakeLockEnabled = true;
+      document.getElementById('wakelock').innerHTML = "wake lock enabeled";
+      document.body.style.backgroundColor = "";
+    } else {
+      noSleep.disable(); // let the screen turn off.
+      wakeLockEnabled = false;
+      document.getElementById('wakelock').innerHTML = "wake lock";
+      document.body.style.backgroundColor = "";
+    }
+  }, false);
+</script>
 
 </html>

@@ -15,6 +15,7 @@
     "atom-space-pen-views": "^2.0.3",
     "express": "^4.16.2",
     "fuzzaldrin": "^2.1.0",
+    "server-destroy": "^1.0.1",
     "socket.io": "^2.0.4",
     "sub-atom": "*",
     "underscore-plus": "1.x"
