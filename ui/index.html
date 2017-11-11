@@ -34,7 +34,7 @@
       console.log('socketIO RECONNECTED');
       $("#conStatus").addClass("color-green");
       $("#conStatus").text("Connected");
-    });
+    }); 
 
     socket.on('buttonState', function(buttons) {
       // refresh all buttons here
