@@ -10,6 +10,7 @@ express     = require 'express'
 app         = express()
 server      = require('http').Server(app);
 io          = require('socket.io')(server);
+enableDestroy = require 'server-destroy'
 
 
 class CommandWebUI
@@ -35,7 +36,7 @@ class CommandWebUI
       order: 3
 
     webserverActive:
-      title: 'Set the webinterface active'
+      title: 'Set the webinterface active on start'
       type: 'boolean'
       default: true
       order: 4
@@ -73,7 +74,7 @@ class CommandWebUI
     catch e
       @state.opened = yes
 
-    atom.workspace.observeTextEditors (editor) -> 
+    atom.workspace.observeTextEditors (editor) ->
       editor.getBuffer().onWillSave ->
         gname = editor.getGrammar().scopeName
 
@@ -101,11 +102,20 @@ class CommandWebUI
 
     app.use(express.static(pathUtil.join(__dirname, '..', 'ui')));
 
+    server.on 'listening', (error) ->
+      atom.notifications.addSuccess 'WEBUI:', {'detail': 'ControlServer ACTIVE'}
+      return
+
+    server.on 'close', (error) ->
+      atom.notifications.addSuccess 'WEBUI:', {'detail': 'ControlServer INACTIVE'}
+      return
+
     server.on 'error', (error) ->
       console.log error # this passes the error to the log instead of a notification
       return
 
-    server.listen(atom.config.get 'command-webui.webserverPort')
+    if atom.config.get 'command-webui.webserverActive'
+      @server()
 
 
     if atom.config.get 'command-webui.alwaysShowToolbarOnLoad'
@@ -113,6 +123,18 @@ class CommandWebUI
     if @state.opened then @toggle yes
 
     @sub = atom.commands.add 'atom-workspace', 'command-webui:toggle-toolbar': => @toggle()
+    @sub = atom.commands.add 'atom-workspace', 'command-webui:start-server': => @server()
+    @sub = atom.commands.add 'atom-workspace', 'command-webui:stop-server': => @noserver()
+
+  server: ->
+    if !server.listening
+      server.listen atom.config.get 'command-webui.webserverPort'
+      enableDestroy(server)
+
+
+  noserver: ->
+    if server.listening
+      server.destroy()
 
   refreshUI: ->
     if server.listening
@@ -132,6 +154,7 @@ class CommandWebUI
   destroyToolbar: -> @toolbarView?.destroy()
 
   deactivate: ->
+    @noserver()
     @sub.dispose()
     @destroyToolbar()
 
