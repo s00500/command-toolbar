@@ -1,13 +1,14 @@
-command-toolbar
+command-webui
 ===============
 
-Atom editor toolbar with easily customized buttons for any command.
+Atom editor webinterface toolbar with easily customized buttons for any command and a nice toolbar in atom itself.
+
 
 ![Image inserted by Atom editor package auto-host-markdown-image](http://i.imgur.com/WKiq18y.gif?delhash=yjNlcuDbSIQTrEX)
 
 ## Installation
 
-Run `apm install command-toolbar` or use the settings screen.
+Run `apm install command-webui` or use the settings screen.
 
 ## Usage
 
@@ -26,7 +27,7 @@ Run `apm install command-toolbar` or use the settings screen.
 
 If you `ctrl-click` the first icon (three bars) it will add a button as usual.  But instead of opening the command palette to choose a command it will create a button immediately with the file path of the currently selected tab.  Clicking on this button will open the file just as if you clicked in the file tree.  Files can be opened no matter what project is open. The button always opens that file.
 
-If you have the `web-browser` package installed and the currently selected teb is a web page, then `ctrl-click` will create a button for that web URL.  Clicking on that button will open the web page at any time, even when the web browser toolbar isn't open.  This means this button toolbar can be the "favorites" toolbar for the web browser.
+If you have the `web-browser` package installed and the currently selected tab is a web page, then `ctrl-click` will create a button for that web URL.  Clicking on that button will open the web page at any time, even when the web browser toolbar isn't open.  This means this button toolbar can be the "favorites" toolbar for the web browser.
 
 This means this command-toolbar package can have buttons for commands, files, and web pages all at once.
 
@@ -37,5 +38,4 @@ There is one setting `Always Show Toolbar On Load`. If it is checked then the to
 
 ## License
 
-command-toolbar is copyright Mark Hahn with the MIT license.
-
+command-webui is copyright Lukas Bachschwell with the MIT license.
