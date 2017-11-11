@@ -34,7 +34,7 @@
       console.log('socketIO RECONNECTED');
       $("#conStatus").addClass("color-green");
       $("#conStatus").text("Connected");
-    }); 
+    });
 
     socket.on('buttonState', function(buttons) {
       // refresh all buttons here
@@ -43,7 +43,12 @@
       buttons.forEach(function(button, index) {
         // could create a tooltipp with the command here
         //$('#row').append("<div class='two columns card'><h5>" + button[0] + "</h5><hr/><button onClick='buttonClick(" + index + ")' id='" + index + "'></button></div>");
-        $('#grid').append("<button onClick='buttonClick(" + index + ")' class='item " + index + "'>"+ button[0] +"</button>");
+        $('#grid').append("<button id='" + index + "' class='item " + index + "' name='" + index + "'>"+ button[0] +"</button>");
+        $('#' + index).on('touchstart', function(e){
+          // We do this to prevent double click zoom in mobile browsers
+          buttonClick(e.target.name);
+          e.preventDefault();
+        });
       });
     });
 
