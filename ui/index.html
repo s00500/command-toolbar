@@ -56,15 +56,27 @@
     function buttonClick(buttonId) {
       socket.emit('buttonEvent', buttonId);
     }
+
+    function scrollUp() {
+      window.scrollTo(0, 0);
+
+    }
+
+    function scrollBottom() {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
   </script>
 </head>
 
 <body>
 
   <div>
-    <h4><div id="mainHeader">Atom Command Palette </div> <span id="conStatus" class="label">Offline</span></h4><button id='wakelock'>wake lock</button>
+    <h4><div id="mainHeader">Atom Command Palette </div> <span id="conStatus" class="label">Offline</span></h4><button id='wakelock'>wake lock</button><button id='tobottom' onclick='scrollBottom()'>Scroll Down</button>
   </div>
   <div id="grid" class="btn-grid">
+  </div>
+  <div>
+    <button onclick='scrollUp()'> Scroll to Top</button>
   </div>
 
 </body>
