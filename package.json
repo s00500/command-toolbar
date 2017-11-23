@@ -5,7 +5,7 @@
   "description": "A toolbar with easily customized buttons for any command plus a webserver with big buttons.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/s00500/command-toolbar"
+    "url": "https://github.com/s00500/command-webui"
   },
   "license": "MIT",
   "engines": {
