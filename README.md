@@ -3,7 +3,7 @@ command-webui
 
 Atom Editor **web interface command palett** with easily customized buttons for any command and a nice toolbar in atom itself. Can also trigger atom commands on save.
 
-![ATOM WebUI Tablet](https://github.com/s00500/command-webui/blob/master/docs/UI.gif)
+![ATOM WebUI Tablet](https://raw.githubusercontent.com/s00500/command-webui/master/docs/UI.gif)
 
 ![Toolbar usage](http://i.imgur.com/WKiq18y.gif?delhash=yjNlcuDbSIQTrEX)
 
@@ -16,7 +16,7 @@ Run `apm install command-webui` or use the settings screen.
 
 ## Webinterface Usage
 
-![Start server](https://github.com/s00500/command-webui/blob/master/docs/startserver.gif)
+![Start server](https://raw.githubusercontent.com/s00500/command-webui/master/docs/startserver.gif)
 
 To enable the webserver just trigger the **command-webui:start-server** command, to stop it again **command-webui:stop-server**
 There are no default keyBindings
