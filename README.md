@@ -1,16 +1,30 @@
 command-webui
 ===============
 
-Atom editor webinterface toolbar with easily customized buttons for any command and a nice toolbar in atom itself.
+Atom Editor **web interface command palett** with easily customized buttons for any command and a nice toolbar in atom itself. Can also trigger atom commands on save.
 
 
 ![Image inserted by Atom editor package auto-host-markdown-image](http://i.imgur.com/WKiq18y.gif?delhash=yjNlcuDbSIQTrEX)
+
+
+This package is based on the cool work of [Mark Hahn](https://github.com/mark-hahn/command-toolbar), but I desperately wanted to have some kind of interface for my tablet that I can quickly customise
 
 ## Installation
 
 Run `apm install command-webui` or use the settings screen.
 
-## Usage
+## Webinterface Usage
+
+To enable the webserver just trigger the **command-webui:start-server** command, to stop it again **command-webui:stop-server**
+There are no default keyBindings
+
+The web interface will then start on your selected port (default is 3030, changeable in the settings)
+
+You can scroll up and down in the interface and also activate a wake lock. the interface reconnects automatically when it uses connection or you restart the server.
+
+All elements in the interface take their names and order from the toolbar, once the web interface is active you can just hide the toolbar. :-)
+
+## Toolbar Usage
 
 * **Open/close** the toolbar using the command `command-toolbar:toggle`.  By default it is bound to the key `ctrl-6`.
 * **Execute** a command by simply clicking on its button.
@@ -31,10 +45,13 @@ If you have the `web-browser` package installed and the currently selected tab i
 
 This means this command-toolbar package can have buttons for commands, files, and web pages all at once.
 
-
-## Configuration
-
 There is one setting `Always Show Toolbar On Load`. If it is checked then the toolbar will always be loaded when Atom is loaded.  If not checked then the toolbar will be visible on load only if it was visible when Atom was closed.
+
+For the web interface you can also configure the port and if it should automatically start when opening atom (not recommended)
+
+## Save trigger commands
+
+Since there is no atom plugin that can do this in a simple way I added the possibility to have commands launched on saving files of a certain scope. To check what scope you are in just activate the HELPER in the settings and save the file, the scope will be shown in a notification. Setup the two arrays and make sure you put in a scope for each command. Then it should just work.
 
 ## License
 
