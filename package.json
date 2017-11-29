@@ -1,7 +1,7 @@
 {
   "name": "command-webui",
   "main": "./lib/command-webui",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A toolbar with easily customized buttons for any command plus a webserver with big buttons.",
   "repository": {
     "type": "git",
