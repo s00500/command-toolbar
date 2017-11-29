@@ -3,7 +3,7 @@ command-webui
 
 Atom Editor **web interface command palett** with easily customized buttons for any command and a nice toolbar in atom itself. Can also trigger atom commands on save.
 
-![ATOM WebUI Tablet](https://raw.githubusercontent.com/s00500/command-webui/master/docs/uiwebdemo.gif)
+![ATOM WebUI Tablet](https://github.com/s00500/command-webui/raw/master/docs/uiwebdemo.gif)
 
 ![Toolbar usage](http://i.imgur.com/WKiq18y.gif?delhash=yjNlcuDbSIQTrEX)
 
