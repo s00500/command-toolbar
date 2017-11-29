@@ -3,8 +3,9 @@ command-webui
 
 Atom Editor **web interface command palett** with easily customized buttons for any command and a nice toolbar in atom itself. Can also trigger atom commands on save.
 
+![ATOM WebUI Tablet](https://github.com/s00500/command-webui/blob/master/docs/UI.gif)
 
-![Image inserted by Atom editor package auto-host-markdown-image](http://i.imgur.com/WKiq18y.gif?delhash=yjNlcuDbSIQTrEX)
+![Toolbar usage](http://i.imgur.com/WKiq18y.gif?delhash=yjNlcuDbSIQTrEX)
 
 
 This package is based on the cool work of [Mark Hahn](https://github.com/mark-hahn/command-toolbar), but I desperately wanted to have some kind of interface for my tablet that I can quickly customise
@@ -14,6 +15,8 @@ This package is based on the cool work of [Mark Hahn](https://github.com/mark-ha
 Run `apm install command-webui` or use the settings screen.
 
 ## Webinterface Usage
+
+![Start server](https://github.com/s00500/command-webui/blob/master/docs/startserver.gif)
 
 To enable the webserver just trigger the **command-webui:start-server** command, to stop it again **command-webui:stop-server**
 There are no default keyBindings
